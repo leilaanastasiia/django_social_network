@@ -1,0 +1,52 @@
+{% extends 'feed/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <!-- PERSONAL INFO -->
+    <div class="container-sm p-5 my-3">
+        <div class="row align-items-start mb-3">
+            <div class="col-xl-2 mb-3">
+                <img class="rounded-circle" src="{{ profile.avatar.url }}" alt="Avatar" width="150" height=150">
+            </div>
+            <div class="col-xl-10">
+                <div class="fw-bold">{{ profile.user.username }}</div>
+                <div class="fst-italic">{{ profile.full_name}}</div>
+                <div class="fst-normal">{{ profile.bio}}.</div>
+                {% if profile.user != request.user %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if is_following %}
+                            <button type="submit" class="btn mt-3 btn-light" value="unfollow">Unfollow</button>
+                        {% else %}
+                            <button type="submit" class="btn mt-3 btn-success" value="follow">Follow</button>
+                        {% endif %}
+                    </form>
+                {% endif %}
+                <div class="fw-semibold mt-3">
+                    <a class="text-break text-decoration-none" href="{% url 'feed:followers' profile.slug %}">
+                        Followers:</a> {{ followers_count }} <br>
+                    <a class="text-break text-decoration-none" href="{% url 'feed:followings' profile.slug %}">
+                        Following:</a> {{ following_count }} <br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER'S POSTS -->
+    <div class="text-center fs-4">{{ profile.user.username}}'s posts:</div>
+    {% if profile.user.posts.exists %}
+        {% for post in profile.user.posts.all %}
+            {%  include "feed/posts_catalogue.html" %}
+        {% endfor %}
+    {% else %}
+        <div class="container-sm p-5 my-3 border rounded w-50">
+            <h5>No posts yet.</h5>
+        </div>
+    {% endif %}
+{% endblock content %}
+
+{% block scripts %}
+    {% include 'feed/like_ajax.html' %}
+{% endblock scripts %}

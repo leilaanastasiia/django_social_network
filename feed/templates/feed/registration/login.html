@@ -1,0 +1,29 @@
+{% extends 'feed/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container-sm my-5 w-25">
+        <div class="text-center mb-4">
+            <h2>Djangogramm ✿</h2>
+        </div>
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="text-center fs-6">
+                <a href="{%  url 'feed:password_reset' %}">Forgot Password?</a>
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success btn-lg" value="login">Log In</button>
+            </div>
+        </form>
+        <div class="text-center">
+            <p> Do not have an account?
+                <a class='password-reset-link' href="{%  url 'feed:django_registration_register' %}">Create one!</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'feed/base.html' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="container-sm my-5 w-25">
+        <div class="text-center mb-4">
+            <h3>You have been registered successfully.</h3>
+            <p>Please, <a href='{% url 'feed:login' %}'>login</a></p>
+        </div>
+    </div>
+{% endblock content %}

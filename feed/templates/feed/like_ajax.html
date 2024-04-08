@@ -1,0 +1,35 @@
+{% block scripts %}
+<script type="application/javascript">
+    $(function() {
+        $(".like-button").one("click", function (event) {
+            event.preventDefault()
+            console.log('Like-button has been clicked!')
+            let like_button = $(this)
+            let post_id = $(this).attr('id')
+            let like_status = $.trim($(this).attr('value'))
+            let likes = parseInt($(like_button).text())
+
+            $.ajax({
+                url: '{% url 'feed:like' %}',
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    post_id: post_id,
+                },
+                success: function(response) {
+                    if (like_status === 'liked') {
+                        likes -= 1
+                        $(like_button).find('span').removeClass().addClass('bi bi-heart').text(' ' + likes)
+                    } else if (like_status === 'nolike') {
+                        likes += 1
+                        $(like_button).find('span').removeClass().addClass('bi bi-heart-fill').text(' ' + likes)
+                    }
+                },
+                error: function(response){
+                    console.log(response.status, response.responseText);
+                }
+            });
+        });
+    });
+</script>
+{% endblock scripts %}

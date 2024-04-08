@@ -1,0 +1,7 @@
+Welcome to our website!
+
+To activate your account, you need to follow this link:
+{{ site }}/activate/{{ activation_key }}/
+
+Sincerely,
+Djangogramm Team

@@ -1,0 +1,49 @@
+{% extends 'feed/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block title %}Djangogramm{% endblock %}
+
+{% block content %}
+    <!-- ADD POST -->
+    <div class="container-sm p-5 my-5 border rounded w-50">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {{ form_images|crispy }}
+        <button type="submit" class="btn btn-success" value="add_post">Add post</button>
+    </form>
+    </div>
+
+    <!-- FEED -->
+    {% if posts_data %}
+        {% for post in posts_data %}
+            {%  include "feed/posts_catalogue.html" %}
+        {% endfor %}
+    {% elif not posts_data %}
+        <div class="container-sm p-5 my-3 border rounded w-50">
+            <h4>No posts yet.</h4>
+            <p>You haven't subscribed to any users yet. Follow some users to see their posts.</p>
+            <p>Available users:</p>
+            <ul>
+                {% if all_users %}
+                    {% for user in all_users %}
+                        <li>
+                            <a href="{% url 'feed:profile' user.profile.slug %}">{{ user.username }}</a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                <p>No users. Wait until somebody will join!</p>
+                {% endif %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="container-sm p-5 my-3 border rounded w-50">
+            <p>No posts or users yet.</p>
+        </div>
+    {% endif %}
+{% endblock content %}
+
+{% block scripts %}
+    {% include 'feed/like_ajax.html' %}
+{% endblock scripts %}

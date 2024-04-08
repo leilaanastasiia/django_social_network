@@ -1,0 +1,46 @@
+<div class="container-sm px-5 py-4 my-3 border rounded w-50">
+    <div class="row align-items-center mb-3">
+        <div class="col-auto">
+            <img class="rounded-circle" src="{{ post.user.profile.avatar.url }}"
+                alt="Avatar" width="50" height="50">
+        </div>
+        <div class="col-3">
+            <a class="text-break text-decoration-none" href="{% url 'feed:profile' post.user.profile.slug %}">
+                <p class="username">{{ post.user.username }}</p>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a class="text-break text-reset text-decoration-none" href="{% url 'feed:post' post.id %}">
+                <p class="post-text">{{ post.text }}</p>
+            </a>
+        </div>
+        <div class="col-12">
+        {% for photo in post.photos.all %}
+            <div class="col-12 mb-2">
+                <a href="{{ photo.photo.url }}">
+                    <img class="img-fluid rounded mx-auto d-block" src="{{ photo.photo.url }}"
+                        width="700" height="500" alt="Photo">
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            {% if post in liked_posts %}
+                <button type="button" class="btn like-button" value='liked' id="{{post.id}}">
+                    <span class="bi bi-heart-fill">&nbsp{{ post.likes.count }}</span>
+                </button>
+            {% else %}
+                <button type="button" class="btn like-button" value='nolike' id="{{post.id}}">
+                    <span class="bi bi-heart">&nbsp{{ post.likes.count }}</span>
+                </button>
+            {% endif %}
+        </div>
+        <div class="col">
+            <p class="post-date text-end text-muted">{{ post.pub_date }}</p>
+        </div>
+    </div>
+</div>

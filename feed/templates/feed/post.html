@@ -1,0 +1,11 @@
+{% extends 'feed/base.html' %}
+
+{% block title %}Post{% endblock %}
+
+{% block content %}
+    {%  include "feed/posts_catalogue.html" %}
+{% endblock content %}
+
+{% block scripts %}
+    {% include 'feed/like_ajax.html' %}
+{% endblock scripts %}
