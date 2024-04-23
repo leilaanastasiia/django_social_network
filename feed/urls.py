@@ -1,6 +1,6 @@
 from django.conf.urls.static import static
 from django.shortcuts import redirect
-from django.urls import path, reverse_lazy
+from django.urls import path, reverse_lazy, include
 from django.contrib.auth import views as django_views
 from django.views.generic import TemplateView
 
@@ -15,7 +15,7 @@ app_name = 'feed'
 urlpatterns = [
     # FEED
     path('feed/', views.IndexView.as_view(), name='index'),
-    path('', lambda request: redirect('feed/', permanent=False)),
+    path('', lambda request: redirect('feed/', permanent=True)),
     path('feed/<int:pk>/', views.PostView.as_view(), name='post'),  # ex: feed/5/
     path('feed/like/', views.like, name='like'),
     path('feed/profile/<slug:slug>/', views.ProfileView.as_view(), name='profile'),  # ex: feed/profile/alice

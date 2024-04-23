@@ -23,6 +23,11 @@
             <p> Do not have an account?
                 <a class='password-reset-link' href="{%  url 'feed:django_registration_register' %}">Create one!</a>
             </p>
+            <p>Or login via
+                <a href="{% url "social:begin" "google-oauth2" %}">Google</a>
+                /
+                <a href="{% url "social:begin" "github" %}">Github</a>
+            </p>
         </div>
     </div>
 
