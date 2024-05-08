@@ -1,8 +1,8 @@
 import os
 import boto3
-from djangogramm_13.settings import env
+from djangogramm_15.settings import env
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangogramm_13.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangogramm_15.settings")
 
 import django
 from django.db.models import signals
